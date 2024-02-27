@@ -1,8 +1,4 @@
-import { useState } from 'react';
-
-const Categories = () => {
-	const [activeIndexTab, setActiveIndexTab] = useState(0);
-
+const Categories = ({ categoryId, onClickCategory }) => {
 	const categoriesList = [
 		'Все',
 		'Мясные',
@@ -12,17 +8,13 @@ const Categories = () => {
 		'Закрытые',
 	];
 
-	const onClickCategory = i => {
-		setActiveIndexTab(i);
-	};
-
 	return (
 		<div className='categories'>
 			<ul>
 				{categoriesList.map((elem, i) => (
 					<li
 						key={i}
-						className={activeIndexTab === i ? 'active' : ''}
+						className={categoryId === i ? 'active' : ''}
 						onClick={() => onClickCategory(i)}
 					>
 						{elem}

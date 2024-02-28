@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import Categories from '../components/Categories';
+import Pagination from '../components/Pagination';
 import PizzaBlock from '../components/PizzaBlock';
 import { Skeleton } from '../components/PizzaBlock/Skeleton';
 import Sort from '../components/Sort';
 
-const Home = () => {
+const Home = ({ searchValue }) => {
 	const [items, setItems] = useState([]);
 	const [itemsIsLoading, setItemsIsLoading] = useState(true);
+	const [currentPage, setCurrentPage] = useState(1);
 
 	const [categoryId, setCategoryId] = useState(0);
 	const [sortType, setSortType] = useState({
@@ -21,15 +23,24 @@ const Home = () => {
 
 		setItemsIsLoading(true);
 		fetch(
-			`https://65dc26713ea883a1529292d2.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}`
+			`https://65dc26713ea883a1529292d2.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&title=${searchValue}`
 		)
 			.then(res => res.json())
 			.then(items => {
 				setItems(items);
 				setItemsIsLoading(false);
 			});
-		window.scrollTo(0, 0);
-	}, [categoryId, sortType]);
+	}, [categoryId, sortType, searchValue, currentPage]);
+
+	// const pizzasFilter = (arr, value) => {
+	// 	const filteredArr = arr.filter(name => {
+	// 		return name.title.toLowerCase().includes(value.toLowerCase());
+	// 	});
+
+	// 	return filteredArr;
+	// };
+
+	// const filteredPizzas = pizzasFilter(items, searchValue);
 
 	return (
 		<>
@@ -46,8 +57,8 @@ const Home = () => {
 			<h2 className='content__title'>Все пиццы</h2>
 			<div className='content__items'>
 				{itemsIsLoading
-					? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
-					: items &&
+					? [...new Array(3)].map((_, i) => <Skeleton key={i} />)
+					: Array.isArray(items) &&
 					  items.map((elem, i) => (
 							<PizzaBlock
 								title={elem.title}
@@ -58,8 +69,8 @@ const Home = () => {
 								types={elem.types}
 							/>
 					  ))}
-				{}
 			</div>
+			<Pagination setCurrentPage={setCurrentPage} />
 		</>
 	);
 };

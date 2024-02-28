@@ -1,0 +1,51 @@
+.root {
+	display: flex;
+	gap: 10px;
+
+	li {
+		border: 1px solid #fe5f1e;
+		transition: background-color 0.1s ease;
+		border-radius: 5px;
+
+		a {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 10px;
+			width: 40px;
+			height: 40px;
+			font-weight: 700;
+			user-select: none;
+			cursor: pointer;
+		}
+
+		&:hover {
+			background-color: #fe5f1e;
+			a {
+				color: #fff;
+			}
+		}
+	}
+
+	:global {
+		.previous,
+		.next {
+			border-radius: 100%;
+		}
+
+		.previous {
+			margin-right: 10px;
+		}
+
+		.next {
+			margin-left: 10px;
+		}
+
+		.selected {
+			background-color: #fe5f1e;
+			a {
+				color: #fff;
+			}
+		}
+	}
+}

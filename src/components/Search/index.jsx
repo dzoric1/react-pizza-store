@@ -1,7 +1,11 @@
+import { useContext } from 'react';
+import SearchContext from '../../contexts/SearchContext';
 import clearIcon from './assets/clear-icon.svg';
 import styles from './Search.module.scss';
 
-const Search = ({ searchValue, setSearchValue }) => {
+const Search = () => {
+	const { searchValue, setSearchValue } = useContext(SearchContext);
+
 	const onClickClear = () => {
 		setSearchValue('');
 	};

@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { useDispatch, UseSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
+import SearchContext from './contexts/SearchContext';
 import Cart from './pages/Cart';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import { decrement, increment } from './redux/slices/filterSlice';
 import './scss/app.scss';
-import SearchContext from './contexts/SearchContext';
 
 function App() {
 	const [searchValue, setSearchValue] = useState('');

@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import Categories from '../components/Categories';
 import Pagination from '../components/Pagination';
 import PizzaBlock from '../components/PizzaBlock';
@@ -10,11 +11,9 @@ const Home = () => {
 	const [items, setItems] = useState([]);
 	const [itemsIsLoading, setItemsIsLoading] = useState(true);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [categoryId, setCategoryId] = useState(0);
-	const [sortType, setSortType] = useState({
-		name: 'популярности (↑)',
-		sort: 'rating',
-	});
+
+	const categoryId = useSelector(state => state.filter.categoryId);
+	const sortType = useSelector(state => state.filter.sortType);
 
 	const { searchValue } = useContext(SearchContext);
 
@@ -34,27 +33,11 @@ const Home = () => {
 			});
 	}, [categoryId, sortType, searchValue, currentPage]);
 
-	// const pizzasFilter = (arr, value) => {
-	// 	const filteredArr = arr.filter(name => {
-	// 		return name.title.toLowerCase().includes(value.toLowerCase());
-	// 	});
-
-	// 	return filteredArr;
-	// };
-
-	// const filteredPizzas = pizzasFilter(items, searchValue);
-
 	return (
 		<>
 			<div className='content__top'>
-				<Categories
-					categoryId={categoryId}
-					onClickCategory={value => setCategoryId(value)}
-				/>
-				<Sort
-					sortType={sortType}
-					onClickSortType={value => setSortType(value)}
-				/>
+				<Categories />
+				<Sort />
 			</div>
 			<h2 className='content__title'>Все пиццы</h2>
 			<div className='content__items'>

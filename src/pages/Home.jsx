@@ -49,6 +49,7 @@ const Home = () => {
 					: Array.isArray(items) &&
 					  items.map((elem, i) => (
 							<PizzaBlock
+								id={elem.id}
 								title={elem.title}
 								price={elem.price}
 								key={elem.id}

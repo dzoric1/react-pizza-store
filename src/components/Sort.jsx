@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useClickOutside } from '../hooks/useClickOutside';
 import { setSortType } from '../redux/slices/filterSlice';
 
 const Sort = () => {
 	const [isOpen, setIsOpen] = useState(false);
+
+	const menuRef = useRef(null);
+	useClickOutside(menuRef, () => setIsOpen(false));
 
 	const sortList = [
 		{ name: 'популярности (↑)', sort: 'rating' },
@@ -23,7 +27,7 @@ const Sort = () => {
 	};
 
 	return (
-		<div className='sort'>
+		<div className='sort' ref={menuRef}>
 			<div className='sort__label' onClick={() => setIsOpen(!isOpen)}>
 				<svg
 					width='10'

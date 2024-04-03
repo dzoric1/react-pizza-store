@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as CartIcon } from '../assets/img/cart.svg';
 import { ReactComponent as ArrowBack } from '../assets/img/grey-arrow-left.svg';
 import { ReactComponent as TrashIcon } from '../assets/img/trash.svg';
+import { CartEmpty } from '../components/CartEmpty';
 import { CartItem } from '../components/CartItem';
 import { clearItems } from '../redux/slices/cartSlice';
 
@@ -13,6 +14,10 @@ const Cart = () => {
 	const count = items.reduce((total, item) => {
 		return total + item.count;
 	}, 0);
+
+	if (!totalPrice) {
+		return <CartEmpty />;
+	}
 
 	return (
 		<div className='container container--cart'>

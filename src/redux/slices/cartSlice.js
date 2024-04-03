@@ -47,14 +47,17 @@ export const cartSlice = createSlice({
 			}, 0);
 		},
 		removeItem: (state, action) => {
-			const findItem = state.items.find(
-				obj =>
+			state.items = state.items.filter(obj => {
+				if (
 					obj.id === action.payload.id &&
 					obj.type === action.payload.type &&
 					obj.size === action.payload.size
-			);
+				) {
+					return false;
+				}
 
-			state.items = state.items.filter(obj => obj.id !== action.payload.id);
+				return true;
+			});
 		},
 		clearItems: (state, action) => {
 			state.totalPrice = 0;

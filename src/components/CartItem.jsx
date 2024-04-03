@@ -39,7 +39,7 @@ export const CartItem = ({ item }) => {
 			</div>
 			<div className='cart__item-remove'>
 				<div
-					onClick={() => dispatch(removeItem(id))}
+					onClick={() => dispatch(removeItem(item))}
 					className='button button--outline button--circle'
 				>
 					<Icon />

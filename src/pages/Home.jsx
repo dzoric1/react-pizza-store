@@ -1,39 +1,39 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Categories from '../components/Categories';
 import Pagination from '../components/Pagination';
 import PizzaBlock from '../components/PizzaBlock';
 import { Skeleton } from '../components/PizzaBlock/Skeleton';
 import Sort from '../components/Sort';
 import { useDebounce } from '../hooks/useDebounce';
+import { fetchPizzas } from '../redux/slices/pizzasSlice';
 
 const Home = () => {
-	const [items, setItems] = useState([]);
-	const [itemsIsLoading, setItemsIsLoading] = useState(true);
-
+	const dispatch = useDispatch();
 	const { categoryId, sortType, currentPage, searchValue } = useSelector(
 		state => state.filter
 	);
-
+	const { items, status } = useSelector(state => state.pizzas);
 	const debounceSearch = useDebounce(searchValue);
 
-	useEffect(() => {
+	const getPizzas = async () => {
 		const order = sortType.sort.includes('-') ? 'asc' : 'desc';
 		const sortBy = sortType.sort.replace('-', '');
 		const category = categoryId ? `category=${categoryId}` : '';
 
-		setItemsIsLoading(true);
-
-		axios
-			.get(
-				`https://65dc26713ea883a1529292d2.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&title=${debounceSearch}`
-			)
-			.then(res => {
-				setItems(res.data);
-				setItemsIsLoading(false);
+		dispatch(
+			fetchPizzas({
+				category,
+				sortBy,
+				order,
+				currentPage,
+				search: debounceSearch,
 			})
-			.catch(error => console.log(error));
+		);
+	};
+
+	useEffect(() => {
+		getPizzas();
 	}, [categoryId, sortType, debounceSearch, currentPage]);
 
 	return (
@@ -44,20 +44,28 @@ const Home = () => {
 			</div>
 			<h2 className='content__title'>Все пиццы</h2>
 			<div className='content__items'>
-				{itemsIsLoading
-					? [...new Array(3)].map((_, i) => <Skeleton key={i} />)
-					: Array.isArray(items) &&
-					  items.map((elem, i) => (
-							<PizzaBlock
-								id={elem.id}
-								title={elem.title}
-								price={elem.price}
-								key={elem.id}
-								imageUrl={elem.imageUrl}
-								sizes={elem.sizes}
-								types={elem.types}
-							/>
-					  ))}
+				{status === 'error' ? (
+					<div className='cart cart--empty'>
+						<h2>
+							Пиццы не найдены <span>😕</span>
+						</h2>
+					</div>
+				) : status === 'loading' ? (
+					[...new Array(3)].map((_, i) => <Skeleton key={i} />)
+				) : (
+					Array.isArray(items) &&
+					items.map((elem, i) => (
+						<PizzaBlock
+							id={elem.id}
+							title={elem.title}
+							price={elem.price}
+							key={elem.id}
+							imageUrl={elem.imageUrl}
+							sizes={elem.sizes}
+							types={elem.types}
+						/>
+					))
+				)}
 			</div>
 			<Pagination />
 		</>

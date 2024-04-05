@@ -11,7 +11,7 @@ const Cart = () => {
 	const dispatch = useDispatch();
 	const { items, totalPrice } = useSelector(store => store.cart);
 
-	const count = items.reduce((total, item) => {
+	const count = items.reduce((total: number, item) => {
 		return total + item.count;
 	}, 0);
 

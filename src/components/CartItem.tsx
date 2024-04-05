@@ -1,9 +1,18 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ReactComponent as Icon } from '../assets/img/plus.svg';
 import { addItem, decrementItem, removeItem } from '../redux/slices/cartSlice';
 
-export const CartItem = ({ item }) => {
+interface CartItemProps {
+	id: string;
+	title: string;
+	type: string;
+	size: number;
+	price: number;
+	count: number;
+	imageUrl: string;
+}
+
+export const CartItem = (item: CartItemProps) => {
 	const dispatch = useDispatch();
 	const { id, title, type, size, price, count, imageUrl } = item;
 

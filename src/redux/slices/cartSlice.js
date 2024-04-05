@@ -58,8 +58,12 @@ export const cartSlice = createSlice({
 
 				return true;
 			});
+
+			state.totalPrice = state.items.reduce((sum, obj) => {
+				return obj.price * obj.count + sum;
+			}, 0);
 		},
-		clearItems: (state, action) => {
+		clearItems: state => {
 			state.totalPrice = 0;
 			state.items = [];
 		},

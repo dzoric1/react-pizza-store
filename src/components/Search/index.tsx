@@ -1,17 +1,17 @@
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchValue } from '../../redux/slices/filterSlice';
-import clearIcon from './assets/clear-icon.svg';
 import styles from './Search.module.scss';
+import clearIcon from './assets/clear-icon.svg';
 
 const Search = () => {
-	const inputRef = useRef();
+	const inputRef = useRef<HTMLInputElement>(null);
 	const dispatch = useDispatch();
 	const { searchValue } = useSelector(state => state.filter);
 
 	const onClickClear = () => {
 		dispatch(setSearchValue(''));
-		inputRef.current.focus();
+		inputRef.current?.focus();
 	};
 
 	return (

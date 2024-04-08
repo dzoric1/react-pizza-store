@@ -2,12 +2,9 @@ import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReactComponent as ArrowIcon } from '../assets/img/arrow-top.svg';
 import { useClickOutside } from '../hooks/useClickOutside';
-import { setSortType } from '../redux/slices/filterSlice';
-
-type SortItem = {
-	name: string;
-	sort: string;
-};
+import { selectFilter } from '../redux/filter/selectors';
+import { setSortType } from '../redux/filter/slice';
+import { SortEnum, SortType } from '../redux/filter/types';
 
 const Sort = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -15,19 +12,19 @@ const Sort = () => {
 	const menuRef = useRef(null);
 	useClickOutside(menuRef, () => setIsOpen(false));
 
-	const sortList: SortItem[] = [
-		{ name: 'популярности (↑)', sort: 'rating' },
-		{ name: 'популярности (↓)', sort: '-rating' },
-		{ name: 'цене (↑)', sort: 'price' },
-		{ name: 'цене (↓)', sort: '-price' },
-		{ name: 'алфавиту (↑)', sort: 'title' },
-		{ name: 'алфавиту (↓)', sort: '-title' },
+	const sortList: SortType[] = [
+		{ name: 'популярности (↑)', sort: SortEnum.RATING_DESC },
+		{ name: 'популярности (↓)', sort: SortEnum.RATING_ASC },
+		{ name: 'цене (↑)', sort: SortEnum.PRICE_DESC },
+		{ name: 'цене (↓)', sort: SortEnum.PRICE_ASC },
+		{ name: 'алфавиту (↑)', sort: SortEnum.RATING_DESC },
+		{ name: 'алфавиту (↓)', sort: SortEnum.RATING_ASC },
 	];
 
-	const sortType = useSelector(state => state.filter.sortType);
+	const { sortType } = useSelector(selectFilter);
 	const dispatch = useDispatch();
 
-	const onSelectSort = (elem: SortItem) => {
+	const onSelectSort = (elem: SortType) => {
 		dispatch(setSortType(elem));
 		setIsOpen(false);
 	};

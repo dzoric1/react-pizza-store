@@ -1,19 +1,21 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Categories from '../components/Categories';
 import Pagination from '../components/Pagination';
 import PizzaBlock from '../components/PizzaBlock';
 import { Skeleton } from '../components/PizzaBlock/Skeleton';
 import Sort from '../components/Sort';
 import { useDebounce } from '../hooks/useDebounce';
-import { fetchPizzas } from '../redux/slices/pizzasSlice';
+import { selectFilter } from '../redux/filter/selectors';
+import { selectPizzas } from '../redux/pizzas/selectors';
+import { fetchPizzas } from '../redux/pizzas/slice';
+import { useAppDispatch } from '../redux/store';
 
 const Home = () => {
-	const dispatch = useDispatch();
-	const { categoryId, sortType, currentPage, searchValue } = useSelector(
-		state => state.filter
-	);
-	const { items, status } = useSelector(state => state.pizzas);
+	const dispatch = useAppDispatch();
+	const { categoryId, sortType, currentPage, searchValue } =
+		useSelector(selectFilter);
+	const { items, status } = useSelector(selectPizzas);
 	const debounceSearch = useDebounce(searchValue);
 
 	const getPizzas = async () => {
@@ -26,7 +28,7 @@ const Home = () => {
 				category,
 				sortBy,
 				order,
-				currentPage,
+				currentPage: String(currentPage),
 				search: debounceSearch,
 			})
 		);

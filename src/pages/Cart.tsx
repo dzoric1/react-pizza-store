@@ -5,11 +5,12 @@ import { ReactComponent as ArrowBack } from '../assets/img/grey-arrow-left.svg';
 import { ReactComponent as TrashIcon } from '../assets/img/trash.svg';
 import { CartEmpty } from '../components/CartEmpty';
 import { CartItem } from '../components/CartItem';
-import { clearItems } from '../redux/slices/cartSlice';
+import { clearItems } from '../redux/cart/slice';
+import { selectCart } from '../redux/cart/selectors';
 
 const Cart = () => {
 	const dispatch = useDispatch();
-	const { items, totalPrice } = useSelector(store => store.cart);
+	const { items, totalPrice } = useSelector(selectCart);
 
 	const count = items.reduce((total: number, item) => {
 		return total + item.count;
@@ -34,10 +35,7 @@ const Cart = () => {
 				</div>
 				<div className='content__items'>
 					{items.map(item => (
-						<CartItem
-							key={`${item.id}-${item.type}-${item.size}`}
-							item={item}
-						/>
+						<CartItem key={`${item.id}-${item.type}-${item.size}`} {...item} />
 					))}
 				</div>
 				<div className='cart__bottom'>

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem } from '../../redux/slices/cartSlice';
-import { ReactComponent as PlusIcon } from '../assets/img/plus.svg';
+import { ReactComponent as PlusIcon } from '../../assets/img/plus.svg';
+import { addItem } from '../../redux/cart/slice';
+import { RootState } from '../../redux/store';
 
 interface PizzaBlockProps {
 	id: string;
@@ -22,8 +23,8 @@ const PizzaBlock = ({
 }: PizzaBlockProps) => {
 	const dispatch = useDispatch();
 
-	const count = useSelector(state =>
-		state.cart.items.reduce((total, item) => {
+	const count = useSelector((state: RootState) =>
+		state.cart.items.reduce((total: number, item) => {
 			if (item.id === id && typeof item.count === 'number') {
 				return total + item.count;
 			}

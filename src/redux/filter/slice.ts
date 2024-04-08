@@ -1,12 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { FilterSliceState, SortEnum } from './types';
 
-const initialState = {
+const initialState: FilterSliceState = {
 	categoryId: 0,
 	currentPage: 1,
 	searchValue: '',
 	sortType: {
 		name: 'популярности (↑)',
-		sort: 'rating',
+		sort: SortEnum.RATING_DESC,
 	},
 };
 
@@ -20,7 +21,7 @@ export const filterSlice = createSlice({
 		setSortType: (state, action) => {
 			state.sortType = action.payload;
 		},
-		setCurrentPage: (state, action) => {
+		setCurrentPage: (state, action: PayloadAction<number>) => {
 			state.currentPage = action.payload;
 		},
 		setSearchValue: (state, action) => {

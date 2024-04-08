@@ -1,18 +1,9 @@
 import { useDispatch } from 'react-redux';
 import { ReactComponent as Icon } from '../assets/img/plus.svg';
-import { addItem, decrementItem, removeItem } from '../redux/slices/cartSlice';
+import { addItem, decrementItem, removeItem } from '../redux/cart/slice';
+import { TCartItem } from '../redux/cart/types';
 
-interface CartItemProps {
-	id: string;
-	title: string;
-	type: string;
-	size: number;
-	price: number;
-	count: number;
-	imageUrl: string;
-}
-
-export const CartItem = (item: CartItemProps) => {
+export const CartItem = (item: TCartItem) => {
 	const dispatch = useDispatch();
 	const { id, title, type, size, price, count, imageUrl } = item;
 

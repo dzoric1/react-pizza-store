@@ -17,8 +17,8 @@ const Sort = () => {
 		{ name: 'популярности (↓)', sort: SortEnum.RATING_ASC },
 		{ name: 'цене (↑)', sort: SortEnum.PRICE_DESC },
 		{ name: 'цене (↓)', sort: SortEnum.PRICE_ASC },
-		{ name: 'алфавиту (↑)', sort: SortEnum.RATING_DESC },
-		{ name: 'алфавиту (↓)', sort: SortEnum.RATING_ASC },
+		{ name: 'алфавиту (↑)', sort: SortEnum.TITLE_DESC },
+		{ name: 'алфавиту (↓)', sort: SortEnum.TITLE_ASC },
 	];
 
 	const { sortType } = useSelector(selectFilter);

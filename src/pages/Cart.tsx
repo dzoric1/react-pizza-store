@@ -5,8 +5,8 @@ import { ReactComponent as ArrowBack } from '../assets/img/grey-arrow-left.svg';
 import { ReactComponent as TrashIcon } from '../assets/img/trash.svg';
 import { CartEmpty } from '../components/CartEmpty';
 import { CartItem } from '../components/CartItem';
-import { clearItems } from '../redux/cart/slice';
 import { selectCart } from '../redux/cart/selectors';
+import { clearItems } from '../redux/cart/slice';
 
 const Cart = () => {
 	const dispatch = useDispatch();

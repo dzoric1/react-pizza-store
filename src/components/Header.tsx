@@ -4,10 +4,16 @@ import { ReactComponent as CartIcon } from '../assets/img/cart.svg';
 import logo from '../assets/img/pizza-logo.svg';
 import { selectCart } from '../redux/cart/selectors';
 import Search from './Search';
+import { useEffect } from 'react';
 
 const Header = () => {
 	const { items, totalPrice } = useSelector(selectCart);
 	const location = useLocation();
+
+	useEffect(() => {
+		const json = JSON.stringify(items);
+		localStorage.setItem('cart', json);
+	}, [items]);
 
 	const count = items.reduce((total: number, item) => {
 		return total + item.count;

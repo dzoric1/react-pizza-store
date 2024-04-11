@@ -1,11 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { CartSliceState } from './types';
 import { calcTotalPrice } from '../../utils/calcTotalPrice';
+import { getCartFromLS } from '../../utils/getCartFromLS';
+import { CartSliceState } from './types';
 
-const initialState: CartSliceState = {
-	totalPrice: 0,
-	items: [],
-};
+const initialState: CartSliceState = getCartFromLS();
 
 export const cartSlice = createSlice({
 	name: 'cart',
